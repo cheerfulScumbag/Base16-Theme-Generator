@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base16 Theme Preview: Deep Sea Synthwave</title>
+    <style>
+        :root {
+            /* Dark Theme */
+            --dark-base00: #040420;
+            --dark-base01: #0a0a33;
+            --dark-base02: #161646;
+            --dark-base03: #323266;
+            --dark-base04: #5b5b8e;
+            --dark-base05: #8e8eb2;
+            --dark-base06: #c5c5df;
+            --dark-base07: #f3f3ff;
+            --dark-base08: #F95786;
+            --dark-base09: #FF8E60;
+            --dark-base0A: #F3E37C;
+            --dark-base0B: #09BC8A;
+            --dark-base0C: #36DCDC;
+            --dark-base0D: #74B3CE;
+            --dark-base0E: #B677D6;
+            --dark-base0F: #E58CB6;
+
+            /* Light Theme */
+            --light-base00: #F3F3FF;
+            --light-base01: #E8E8F7;
+            --light-base02: #C5C5DF;
+            --light-base03: #8E8EB2;
+            --light-base04: #5B5B8E;
+            --light-base05: #323266;
+            --light-base06: #161646;
+            --light-base07: #040420;
+            --light-base08: #D91E5B;
+            --light-base09: #D35222;
+            --light-base0A: #B39700;
+            --light-base0B: #058864;
+            --light-base0C: #05A1A1;
+            --light-base0D: #2D7BAB;
+            --light-base0E: #8F49B3;
+            --light-base0F: #B34D7E;
+
+            --base00: var(--dark-base00);
+            --base01: var(--dark-base01);
+            --base02: var(--dark-base02);
+            --base03: var(--dark-base03);
+            --base04: var(--dark-base04);
+            --base05: var(--dark-base05);
+            --base06: var(--dark-base06);
+            --base07: var(--dark-base07);
+            --base08: var(--dark-base08);
+            --base09: var(--dark-base09);
+            --base0A: var(--dark-base0A);
+            --base0B: var(--dark-base0B);
+            --base0C: var(--dark-base0C);
+            --base0D: var(--dark-base0D);
+            --base0E: var(--dark-base0E);
+            --base0F: var(--dark-base0F);
+        }
+
+        body {
+            background-color: var(--base00);
+            color: var(--base05);
+            font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1 {
+            color: var(--base0D);
+            margin-bottom: 10px;
+            font-weight: 300;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background-color: var(--base01);
+            color: var(--base05);
+            border: 1px solid var(--base02);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--base02);
+            color: var(--base07);
+        }
+
+        .window {
+            background-color: var(--base00);
+            border: 1px solid var(--base02);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(4, 4, 32, 0.8);
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            transition: all 0.3s ease;
+        }
+
+        body.theme-light .window {
+            box-shadow: 0 20px 50px rgba(4, 4, 32, 0.15);
+        }
+
+        .titlebar {
+            background-color: var(--base01);
+            padding: 12px 18px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--base02);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .mac-btn {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+        }
+
+        .close {
+            background-color: var(--base08);
+        }
+
+        .min {
+            background-color: var(--base0A);
+        }
+
+        .max {
+            background-color: var(--base0B);
+        }
+
+        pre {
+            padding: 25px;
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .keyword {
+            color: var(--base0E);
+            font-weight: bold;
+        }
+
+        .function {
+            color: var(--base0D);
+        }
+
+        .string {
+            color: var(--base0B);
+        }
+
+        .number {
+            color: var(--base09);
+        }
+
+        .comment {
+            color: var(--base03);
+            font-style: italic;
+        }
+
+        .class {
+            color: var(--base0A);
+        }
+
+        .operator {
+            color: var(--base05);
+        }
+
+        .variable {
+            color: var(--base08);
+        }
+
+        .regex {
+            color: var(--base0C);
+        }
+
+        .property {
+            color: var(--base08);
+        }
+
+        .deprecated {
+            color: var(--base0F);
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body class="theme-dark">
+
+    <h1 id="theme-title">Deep Sea Synthwave - Dark Oceanic</h1>
+    <div class="controls">
+        <button onclick="setTheme('dark')">Dark Theme</button>
+        <button onclick="setTheme('light')">Light Theme</button>
+    </div>
+
+    <div class="window">
+        <div class="titlebar">
+            <div class="mac-btn close"></div>
+            <div class="mac-btn min"></div>
+            <div class="mac-btn max"></div>
+        </div>
+        <pre><code><span class="comment"># Deep Sea Synthwave - Deep Blue & Lavender scheme</span>
+<span class="keyword">import</span> re
+<span class="keyword">from</span> typing <span class="keyword">import</span> List
+
+<span class="keyword">class</span> <span class="class">OceanicSynth</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, volume: <span class="class">int</span> = <span class="number">11</span>):
+        self.<span class="property">volume</span> = volume
+        self.<span class="property">is_active</span> = <span class="number">True</span>
+        self.<span class="property">style</span> = <span class="string">"Deep Sea Mist"</span>
+
+    <span class="keyword">def</span> <span class="function">play_track</span>(self, title: <span class="class">str</span>) -> <span class="class">bool</span>:
+        <span class="comment"># Play the track with soothing ocean colors</span>
+        <span class="keyword">if</span> <span class="keyword">not</span> self.<span class="property">is_active</span>:
+            <span class="keyword">return</span> <span class="number">False</span>
+
+        regex_pattern = <span class="regex">r"^track_\d+$"</span>
+        <span class="keyword">if</span> re.<span class="function">match</span>(regex_pattern, title):
+            <span class="class">print</span>(<span class="string">f"Now playing: </span>{title}<span class="string"> at volume </span>{self.<span class="property">volume</span>}<span class="string">"</span>)
+            <span class="keyword">return</span> <span class="number">True</span>
+            
+        <span class="keyword">return</span> <span class="number">False</span>
+        
+    <span class="keyword">def</span> <span class="function">old_method_do_not_use</span>(self):
+        <span class="deprecated">return "This is Base0F"</span></code></pre>
+    </div>
+
+    <script>
+        function setTheme(theme) {
+            const root = document.documentElement;
+            document.body.className = `theme-${theme}`;
+
+            if (theme === 'light') {
+                document.getElementById('theme-title').innerText = "Deep Sea Synthwave - Sunlit Shallows";
+                for (let i = 0; i < 16; i++) {
+                    let hex = i.toString(16).toUpperCase();
+                    root.style.setProperty(`--base0${hex}`, `var(--light-base0${hex})`);
+                }
+            } else {
+                document.getElementById('theme-title').innerText = "Deep Sea Synthwave - Dark Oceanic";
+                for (let i = 0; i < 16; i++) {
+                    let hex = i.toString(16).toUpperCase();
+                    root.style.setProperty(`--base0${hex}`, `var(--dark-base0${hex})`);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
