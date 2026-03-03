@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base16 Theme Preview: Tropical Sorbet</title>
+    <style>
+        :root {
+            /* Tropical Sorbet Dark */
+            --dark-base00: #2b0000;
+            --dark-base01: #3d0000;
+            --dark-base02: #3d0000;
+            --dark-base03: #5c4a4a;
+            --dark-base04: #e0e0e0;
+            --dark-base05: #ffffff;
+            --dark-base06: #e0e0e0;
+            --dark-base07: #ffffff;
+            --dark-base08: #ff9f1c;
+            --dark-base09: #ffbf69;
+            --dark-base0A: #ffbf69;
+            --dark-base0B: #ff4d4d;
+            --dark-base0C: #ff4d4d;
+            --dark-base0D: #ff0000;
+            --dark-base0E: #ff9f1c;
+            --dark-base0F: #ff0000;
+
+            /* Tropical Sorbet Light */
+            --light-base00: #ffffff;
+            --light-base01: #D1DEF0;
+            --light-base02: #D1DEF0;
+            --light-base03: #5c4a4a;
+            --light-base04: #101010;
+            --light-base05: #101010;
+            --light-base06: #101010;
+            --light-base07: #101010;
+            --light-base08: #e07b00;
+            --light-base09: #d48a2a;
+            --light-base0A: #d48a2a;
+            --light-base0B: #be1a1a;
+            --light-base0C: #be1a1a;
+            --light-base0D: #2b0000;
+            --light-base0E: #e07b00;
+            --light-base0F: #2b0000;
+
+            /* Current Defaults */
+            --base00: var(--dark-base00);
+            --base01: var(--dark-base01);
+            --base02: var(--dark-base02);
+            --base03: var(--dark-base03);
+            --base04: var(--dark-base04);
+            --base05: var(--dark-base05);
+            --base06: var(--dark-base06);
+            --base07: var(--dark-base07);
+            --base08: var(--dark-base08);
+            --base09: var(--dark-base09);
+            --base0A: var(--dark-base0A);
+            --base0B: var(--dark-base0B);
+            --base0C: var(--dark-base0C);
+            --base0D: var(--dark-base0D);
+            --base0E: var(--dark-base0E);
+            --base0F: var(--dark-base0F);
+        }
+
+        body {
+            background-color: var(--base00);
+            color: var(--base05);
+            font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1 {
+            color: var(--base0D);
+            margin-bottom: 10px;
+            font-weight: 300;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background-color: var(--base01);
+            color: var(--base05);
+            border: 1px solid var(--base02);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--base02);
+            color: var(--base07);
+        }
+
+        .window {
+            background-color: var(--base00);
+            border: 1px solid var(--base02);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            transition: all 0.3s ease;
+        }
+
+        .titlebar {
+            background-color: var(--base01);
+            padding: 12px 18px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--base02);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .mac-btn {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+        }
+
+        .close {
+            background-color: var(--base08);
+        }
+
+        .min {
+            background-color: var(--base0A);
+        }
+
+        .max {
+            background-color: var(--base0B);
+        }
+
+        pre {
+            padding: 25px;
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .keyword {
+            color: var(--base0E);
+            font-weight: bold;
+        }
+
+        .function {
+            color: var(--base0D);
+        }
+
+        .string {
+            color: var(--base0B);
+        }
+
+        .number {
+            color: var(--base09);
+        }
+
+        .comment {
+            color: var(--base03);
+            font-style: italic;
+        }
+
+        .class {
+            color: var(--base0A);
+        }
+
+        .operator {
+            color: var(--base05);
+        }
+
+        .variable {
+            color: var(--base08);
+        }
+
+        .regex {
+            color: var(--base0C);
+        }
+
+        .property {
+            color: var(--base08);
+        }
+
+        .deprecated {
+            color: var(--base0F);
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body class="theme-dark">
+
+    <h1 id="theme-title">Tropical Sorbet - Refreshing Chill</h1>
+    <div class="controls">
+        <button onclick="setTheme('dark')">Dark Theme</button>
+        <button onclick="setTheme('light')">Light Theme</button>
+    </div>
+
+    <div class="window">
+        <div class="titlebar">
+            <div class="mac-btn close"></div>
+            <div class="mac-btn min"></div>
+            <div class="mac-btn max"></div>
+        </div>
+        <pre><code><span class="comment"># Tropical Sorbet - Fresh and Zesty</span>
+<span class="keyword">import</span> fruit
+<span class="keyword">from</span> freezer <span class="keyword">import</span> Sorbet
+
+<span class="keyword">class</span> <span class="class">RefreshingBreak</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, coldness: <span class="class">int</span> = <span class="number">10</span>):
+        self.<span class="property">temperature</span> = coldness
+        self.<span class="property">is_frozen</span> = <span class="number">True</span>
+        self.<span class="property">flavor</span> = <span class="string">"Orange & Teal"</span>
+
+    <span class="keyword">def</span> <span class="function">serve</span>(self, scoops: <span class="class">float</span>) -> <span class="class">bool</span>:
+        <span class="comment"># A high-energy burst of flavor</span>
+        <span class="keyword">if</span> scoops > <span class="number">3.0</span>:
+            <span class="keyword">return</span> <span class="number">False</span>
+
+        regex = <span class="regex">r"^scoop_\d+$"</span>
+        <span class="keyword">if</span> self.<span class="property">is_frozen</span>:
+            <span class="class">print</span>(<span class="string">f"Enjoying </span>{self.<span class="property">flavor</span>}<span class="string">!"</span>)
+            <span class="keyword">return</span> <span class="number">True</span>
+            
+        <span class="keyword">return</span> <span class="number">False</span></code></pre>
+    </div>
+
+    <script>
+        function setTheme(theme) {
+            const root = document.documentElement;
+            document.body.className = `theme-${theme}`;
+
+            if (theme === 'light') {
+                document.getElementById('theme-title').innerText = "Tropical Sorbet - Sunny Delight";
+                for (let i = 0; i < 16; i++) {
+                    let hex = i.toString(16).toUpperCase();
+                    root.style.setProperty(`--base0${hex}`, `var(--light-base0${hex})`);
+                }
+            } else {
+                document.getElementById('theme-title').innerText = "Tropical Sorbet - Refreshing Chill";
+                for (let i = 0; i < 16; i++) {
+                    let hex = i.toString(16).toUpperCase();
+                    root.style.setProperty(`--base0${hex}`, `var(--dark-base0${hex})`);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

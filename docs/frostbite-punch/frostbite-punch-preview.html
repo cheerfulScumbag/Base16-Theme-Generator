@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base16 Theme Preview: Frostbite Punch</title>
+    <style>
+        :root {
+            /* Frostbite Punch Dark */
+            --dark-base00: #1d3557;
+            --dark-base01: #254066;
+            --dark-base02: #31517a;
+            --dark-base03: #457b9d;
+            --dark-base04: #a8dadc;
+            --dark-base05: #f1faee;
+            --dark-base06: #ffffff;
+            --dark-base07: #ffffff;
+            --dark-base08: #e63946;
+            --dark-base09: #a8dadc;
+            --dark-base0A: #ffffff;
+            --dark-base0B: #f1faee;
+            --dark-base0C: #457b9d;
+            --dark-base0D: #a8dadc;
+            --dark-base0E: #e63946;
+            --dark-base0F: #ffffff;
+
+            /* Frostbite Punch Light */
+            --light-base00: #f1faee;
+            --light-base01: #e0eae0;
+            --light-base02: #cedad1;
+            --light-base03: #457b9d;
+            --light-base04: #1d3557;
+            --light-base05: #1d3557;
+            --light-base06: #000000;
+            --light-base07: #000000;
+            --light-base08: #e63946;
+            --light-base09: #457b9d;
+            --light-base0A: #1d3557;
+            --light-base0B: #1d3557;
+            --light-base0C: #457b9d;
+            --light-base0D: #1d3557;
+            --light-base0E: #e63946;
+            --light-base0F: #000000;
+
+            /* Current Defaults */
+            --base00: var(--dark-base00);
+            --base01: var(--dark-base01);
+            --base02: var(--dark-base02);
+            --base03: var(--dark-base03);
+            --base04: var(--dark-base04);
+            --base05: var(--dark-base05);
+            --base06: var(--dark-base06);
+            --base07: var(--dark-base07);
+            --base08: var(--dark-base08);
+            --base09: var(--dark-base09);
+            --base0A: var(--dark-base0A);
+            --base0B: var(--dark-base0B);
+            --base0C: var(--dark-base0C);
+            --base0D: var(--dark-base0D);
+            --base0E: var(--dark-base0E);
+            --base0F: var(--dark-base0F);
+        }
+
+        body {
+            background-color: var(--base00);
+            color: var(--base05);
+            font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1 {
+            color: var(--base0D);
+            margin-bottom: 10px;
+            font-weight: 300;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background-color: var(--base01);
+            color: var(--base05);
+            border: 1px solid var(--base02);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--base02);
+            color: var(--base07);
+        }
+
+        .window {
+            background-color: var(--base00);
+            border: 1px solid var(--base02);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            transition: all 0.3s ease;
+        }
+
+        .titlebar {
+            background-color: var(--base01);
+            padding: 12px 18px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--base02);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .mac-btn {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+        }
+
+        .close {
+            background-color: var(--base08);
+        }
+
+        .min {
+            background-color: var(--base0A);
+        }
+
+        .max {
+            background-color: var(--base0B);
+        }
+
+        pre {
+            padding: 25px;
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .keyword {
+            color: var(--base0E);
+            font-weight: bold;
+        }
+
+        .function {
+            color: var(--base0D);
+        }
+
+        .string {
+            color: var(--base0B);
+        }
+
+        .number {
+            color: var(--base09);
+        }
+
+        .comment {
+            color: var(--base03);
+            font-style: italic;
+        }
+
+        .class {
+            color: var(--base0A);
+        }
+
+        .operator {
+            color: var(--base05);
+        }
+
+        .variable {
+            color: var(--base08);
+        }
+
+        .regex {
+            color: var(--base0C);
+        }
+
+        .property {
+            color: var(--base0E);
+        }
+
+        .deprecated {
+            color: var(--base0F);
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body class="theme-dark">
+
+    <h1 id="theme-title">Frostbite Punch - Arctic Chill</h1>
+    <div class="controls">
+        <button onclick="setTheme('dark')">Dark Theme</button>
+        <button onclick="setTheme('light')">Light Theme</button>
+    </div>
+
+    <div class="window">
+        <div class="titlebar">
+            <div class="mac-btn close"></div>
+            <div class="mac-btn min"></div>
+            <div class="mac-btn max"></div>
+        </div>
+        <pre><code><span class="comment"># Frostbite Punch - Sharp and Cold</span>
+<span class="keyword">import</span> frost
+<span class="keyword">from</span> arctic <span class="keyword">import</span> Punch
+
+<span class="keyword">class</span> <span class="class">WinterBlast</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, severity: <span class="class">int</span> = <span class="number">10</span>):
+        self.<span class="property">temp</span> = -severity
+        self.<span class="property">is_freezing</span> = <span class="number">True</span>
+        self.<span class="property">color</span> = <span class="string">"Honeydew & Navy"</span>
+
+    <span class="keyword">def</span> <span class="function">punch</span>(self, power: <span class="class">float</span>) -> <span class="class">bool</span>:
+        <span class="comment"># Delivering a crisp, cold strike</span>
+        <span class="keyword">if</span> power > <span class="number">5.0</span>:
+            <span class="keyword">return</span> <span class="number">False</span>
+
+        regex = <span class="regex">r"^strike_\d+$"</span>
+        <span class="keyword">if</span> self.<span class="property">is_freezing</span>:
+            <span class="class">print</span>(<span class="string">f"Bracing for </span>{self.<span class="property">color</span>}<span class="string">!"</span>)
+            <span class="keyword">return</span> <span class="number">True</span>
+            
+        <span class="keyword">return</span> <span class="number">False</span></code></pre>
+    </div>
+
+    <script>
+        function setTheme(theme) {
+            const root = document.documentElement;
+            document.body.className = `theme-${theme}`;
+
+            if (theme === 'light') {
+                document.getElementById('theme-title').innerText = "Frostbite Punch - Morning Frost";
+                for (let i = 0; i < 16; i++) {
+                    let hex = i.toString(16).toUpperCase();
+                    root.style.setProperty(`--base0${hex}`, `var(--light-base0${hex})`);
+                }
+            } else {
+                document.getElementById('theme-title').innerText = "Frostbite Punch - Arctic Chill";
+                for (let i = 0; i < 16; i++) {
+                    let hex = i.toString(16).toUpperCase();
+                    root.style.setProperty(`--base0${hex}`, `var(--dark-base0${hex})`);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
