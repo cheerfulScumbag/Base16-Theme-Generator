@@ -4,8 +4,8 @@ A tool to generate custom Base16 themes. and a collection of custom Base16 theme
 
 ## Interactive Tools
 
-* **[Theme Creator](https://cheerfulscumbag.github.io/Base16-Theme-Generator/docs/index.html)** — A live tool to design, preview, and export your own custom Base16 color schemes.
-* **[Theme Examples](https://cheerfulscumbag.github.io/Base16-Theme-Generator/docs/themes/index.html)** — Browse the collection of pre-made themes with interactive previews.
+* **[Theme Creator](https://cheerfulscumbag.github.io/Base16-Theme-Generator/)** — A live tool to design, preview, and export your own custom Base16 color schemes.
+* **[Theme Examples](https://cheerfulscumbag.github.io/Base16-Theme-Generator/themes/index.html)** — Browse the collection of pre-made themes with interactive previews.
 
 ## How to Use
 
