@@ -1,374 +1,1109 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Themes of Lore — Collection</title>
-  <style>
-    :root {
-      --gap: 20px;
-      --bg: #0f1419;
-      --fg: #e6edf3;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base16 Theme Creator</title>
+    <meta name="description" content="Create and export custom Base16 color themes with a live code preview.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════
+           Design Tokens
+           ═══════════════════════════════════════════ */
+        :root {
+            --app-bg: #0d0f12;
+            --app-surface: #161920;
+            --app-surface-2: #1e2230;
+            --app-border: #2a2e3d;
+            --app-text: #c8cdd8;
+            --app-text-dim: #6b7280;
+            --app-text-bright: #eef0f6;
+            --app-accent: #7c6dea;
+            --app-accent-hover: #9184f0;
+            --app-accent-glow: rgba(124, 109, 234, 0.25);
+            --app-success: #34d399;
+            --app-radius: 12px;
+            --app-radius-sm: 8px;
+            --app-transition: 0.2s ease;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+        }
 
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      margin: 0;
-      background: var(--bg);
-      color: var(--fg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 40px 20px;
-    }
+        /* Light-mode app chrome overrides */
+        body.app-light {
+            --app-bg: #f0f2f5;
+            --app-surface: #ffffff;
+            --app-surface-2: #e8eaed;
+            --app-border: #d1d5db;
+            --app-text: #374151;
+            --app-text-dim: #6b7280;
+            --app-text-bright: #111827;
+            --app-accent: #6d5dd3;
+            --app-accent-hover: #5a4cbf;
+            --app-accent-glow: rgba(109, 93, 211, 0.2);
+        }
 
-    main {
-      max-width: 1000px;
-      width: 100%;
-    }
+        /* ═══════════════════════════════════════════
+           Reset & Base
+           ═══════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin: 0;
-      background: linear-gradient(90deg, #58b4d1, #ffb703);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        body {
+            background-color: var(--app-bg);
+            color: var(--app-text);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    .intro {
-      font-size: 1.1rem;
-      color: #8b949e;
-      margin-top: 10px;
-    }
+        /* ═══════════════════════════════════════════
+           Header
+           ═══════════════════════════════════════════ */
+        .app-header {
+            text-align: center;
+            padding: 40px 20px 24px;
+            position: relative;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: var(--gap);
-    }
+        .app-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(600px, 80%);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--app-border), transparent);
+        }
 
-    .theme-link {
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      padding: 24px;
-      border-radius: 12px;
-      border: 2px solid transparent;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
+        .app-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #c8cdd8 0%, #7c6dea 50%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+        }
 
-    .theme-link:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
+        .app-header p {
+            color: var(--app-text-dim);
+            font-size: 14px;
+            font-weight: 400;
+        }
 
-    .theme-name {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
+        /* ═══════════════════════════════════════════
+           Main Layout
+           ═══════════════════════════════════════════ */
+        .app-main {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 28px;
+            max-width: 1260px;
+            margin: 0 auto;
+            padding: 28px 24px 60px;
+        }
 
-    .theme-meta {
-      font-size: 0.85rem;
-      opacity: 0.8;
-      font-family: monospace;
-    }
+        @media (max-width: 960px) {
+            .app-main {
+                grid-template-columns: 1fr;
+                max-width: 720px;
+            }
+        }
 
-    /* Theme Specific Styles */
-    .one-million {
-      background: #000000;
-      color: #FFFFFF;
-      border-color: #FCA311;
-    }
+        /* ═══════════════════════════════════════════
+           Panels (shared)
+           ═══════════════════════════════════════════ */
+        .panel {
+            background: var(--app-surface);
+            border: 1px solid var(--app-border);
+            border-radius: var(--app-radius);
+            overflow: hidden;
+        }
 
-    .one-million:hover {
-      border-color: #F3BA65;
-      background: #14213D;
-    }
+        .panel-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--app-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .burning-ocean {
-      background: #023047;
-      color: #73bfdc;
-      border-color: #ffb703;
-    }
+        .panel-header h2 {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--app-text-dim);
+        }
 
-    .burning-ocean:hover {
-      border-color: #fb8500;
-      background: #053b56;
-    }
+        .panel-body {
+            padding: 20px;
+        }
 
-    .cream-soda {
-      background: #3b3232;
-      color: #FFEBF7;
-      border-color: #FEE440;
-    }
+        /* ═══════════════════════════════════════════
+           Left Panel — Meta inputs
+           ═══════════════════════════════════════════ */
+        .meta-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
 
+        .meta-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
-    .cream-soda:hover {
-      border-color: #00BBF9;
-      background: #404040;
-    }
+        .meta-field label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--app-text-dim);
+        }
 
-    .deep-sea-synthwave {
-      background: #040420;
-      color: #8e8eb2;
-      border-color: #74B3CE;
-    }
+        .meta-field input[type="text"],
+        .meta-field select {
+            width: 100%;
+            box-sizing: border-box;
+            background: var(--app-surface-2);
+            border: 1px solid var(--app-border);
+            border-radius: var(--app-radius-sm);
+            color: var(--app-text-bright);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            padding: 10px 12px;
+            outline: none;
+            transition: border-color var(--app-transition), box-shadow var(--app-transition);
+        }
 
-    .deep-sea-synthwave:hover {
-      border-color: #F95786;
-      background: #0a0a33;
-    }
+        .meta-field input[type="text"]:focus,
+        .meta-field select:focus {
+            border-color: var(--app-accent);
+            box-shadow: 0 0 0 3px var(--app-accent-glow);
+        }
 
-    .enchanted-midnight {
-      background: #180034;
-      color: #a37ac3;
-      border-color: #bf75d6;
-    }
+        .meta-field select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
 
-    .enchanted-midnight:hover {
-      border-color: #f0567a;
-      background: #2e005d;
-    }
+        /* ═══════════════════════════════════════════
+           Left Panel — Color Grid
+           ═══════════════════════════════════════════ */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
 
-    .frostbite-punch {
-      background: #1d3557;
-      color: #f1faee;
-      border-color: #e63946;
-    }
+        .color-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 4px 8px;
+            background: var(--app-surface-2);
+            border: 1px solid var(--app-border);
+            border-radius: var(--app-radius-sm);
+            transition: border-color var(--app-transition), transform var(--app-transition), box-shadow var(--app-transition);
+            cursor: pointer;
+            position: relative;
+        }
 
-    .frostbite-punch:hover {
-      border-color: #a8dadc;
-      background: #254066;
-    }
+        .color-cell:hover {
+            border-color: var(--app-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
 
-    .funky-pigeon {
-      background: #1b1e23;
-      color: #abb2bf;
-      border-color: #229e99;
-    }
+        .color-cell .color-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--app-text-dim);
+        }
 
-    .funky-pigeon:hover {
-      border-color: #f2636a;
-      background: #23272e;
-    }
+        .color-cell .color-role {
+            font-size: 8px;
+            color: var(--app-text-dim);
+            opacity: 0.7;
+            text-align: center;
+            line-height: 1.2;
+            min-height: 10px;
+        }
 
-    .girl-candy {
-      background: #1a1523;
-      color: #fdfcfd;
-      border-color: #f15bb5;
-    }
+        .color-cell input[type="color"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--app-border);
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 0;
+            overflow: hidden;
+            transition: border-color var(--app-transition), box-shadow var(--app-transition);
+        }
 
-    .girl-candy:hover {
-      border-color: #9b5de5;
-      background: #2a2036;
-    }
+        .color-cell input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
 
-    .green-tea {
-      background: #1a1c29;
-      color: #aab1c7;
-      border-color: #c6e0ae;
-    }
+        .color-cell input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
 
-    .green-tea:hover {
-      border-color: #94c9a9;
-      background: #252839;
-    }
+        .color-cell input[type="color"]::-moz-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
 
-    .tangerine {
-      background: #001219;
-      color: #58b4d1;
-      border-color: #ee9b00;
-    }
+        .color-cell input[type="color"]:hover {
+            border-color: var(--app-accent);
+            box-shadow: 0 0 12px var(--app-accent-glow);
+        }
 
-    .tangerine:hover {
-      border-color: #bb3e03;
-      background: #001f2d;
-    }
+        .color-cell .hex-display {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--app-text);
+            letter-spacing: 0.5px;
+            user-select: all;
+        }
 
-    .nature {
-      background: #140c09;
-      color: #b39a8c;
-      border-color: #ab3f46;
-    }
+        /* ═══════════════════════════════════════════
+           Download Button
+           ═══════════════════════════════════════════ */
+        .download-bar {
+            padding: 16px 20px;
+            border-top: 1px solid var(--app-border);
+        }
 
-    .nature:hover {
-      border-color: #da2c38;
-      background: #2a1913;
-    }
+        .btn-download {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--app-accent), #6055c0);
+            color: #fff;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--app-radius-sm);
+            cursor: pointer;
+            transition: all var(--app-transition);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .rusty-trombone {
-      background: #252422;
-      color: #FFFCF2;
-      border-color: #EB5E28;
-    }
+        .btn-download::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.1));
+            opacity: 0;
+            transition: opacity var(--app-transition);
+        }
 
-    .rusty-trombone:hover {
-      border-color: #CCC5B9;
-      background: #403D39;
-    }
+        .btn-download:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px var(--app-accent-glow);
+        }
 
-    .summer-fun {
-      background: #0a131f;
-      color: #ffffff;
-      border-color: #ff4da6;
-    }
+        .btn-download:hover::before {
+            opacity: 1;
+        }
 
-    .summer-fun:hover {
-      border-color: #33c9ff;
-      background: #142132;
-    }
+        .btn-download:active {
+            transform: translateY(0);
+        }
 
-    .tango {
-      background: #17262D;
-      color: #BCC3C7;
-      border-color: #FFDEB3;
-    }
+        .btn-download svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
 
-    .tango:hover {
-      border-color: #FF4000;
-      background: #233d4d;
-    }
+        .btn-download.downloaded {
+            background: linear-gradient(135deg, #059669, #10b981);
+        }
 
-    .italy {
-      background: #240000;
-      color: #ffebeb;
-      border-color: #ffebeb;
-    }
+        /* ═══════════════════════════════════════════
+           Right Panel — Preview
+           ═══════════════════════════════════════════ */
+        .preview-container {
+            position: sticky;
+            top: 20px;
+        }
 
-    .italy:hover {
-      border-color: #ff0000;
-      background: #3d0000;
-    }
+        .preview-body {
+            padding: 24px;
+        }
 
-    .tropical-sorbet {
-      background: #2b0000;
-      color: #ffffff;
-      border-color: #ff9f1c;
-    }
+        /* ──── Preview Window (matches repo structure) ──── */
+        .window {
+            background-color: var(--base00);
+            border: 1px solid var(--base02);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 109, 234, 0.06);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
 
-    .tropical-sorbet:hover {
-      border-color: #ff0000;
-      background: #3d0000;
-    }
+        .titlebar {
+            background-color: var(--base01);
+            padding: 12px 18px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--base02);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
 
-    .harvest {
-      background: #13232c;
-      color: #a3b9c8;
-      border-color: #fcca46;
-    }
+        .mac-btn {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
 
-    .harvest:hover {
-      border-color: #cc5200;
-      background: #1d323f;
-    }
-  </style>
+        .close {
+            background-color: var(--base08);
+        }
+
+        .min {
+            background-color: var(--base0A);
+        }
+
+        .max {
+            background-color: var(--base0B);
+        }
+
+        .preview-body pre {
+            padding: 25px;
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            color: var(--base05);
+            background: transparent;
+        }
+
+        .keyword {
+            color: var(--base0E);
+            font-weight: bold;
+        }
+
+        .function {
+            color: var(--base0D);
+        }
+
+        .string {
+            color: var(--base0B);
+        }
+
+        .number {
+            color: var(--base09);
+        }
+
+        .comment {
+            color: var(--base03);
+            font-style: italic;
+        }
+
+        .class {
+            color: var(--base0A);
+        }
+
+        .operator {
+            color: var(--base05);
+        }
+
+        .variable {
+            color: var(--base08);
+        }
+
+        .regex {
+            color: var(--base0C);
+        }
+
+        .property {
+            color: var(--base08);
+        }
+
+        .deprecated {
+            color: var(--base0F);
+            text-decoration: line-through;
+        }
+
+        /* ──── Color Swatch Row ──── */
+        .swatch-row {
+            display: flex;
+            gap: 0;
+            margin-top: 20px;
+            border-radius: var(--app-radius-sm);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .swatch-chip {
+            flex: 1;
+            height: 32px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .swatch-chip:hover {
+            flex: 2;
+        }
+
+        .swatch-chip::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            font-family: var(--font-mono);
+            color: var(--app-text-dim);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .swatch-chip:hover::after {
+            opacity: 1;
+        }
+
+        /* ═══════════════════════════════════════════
+           Randomize Button
+           ═══════════════════════════════════════════ */
+        .btn-randomize {
+            background: transparent;
+            border: 1px solid var(--app-border);
+            color: var(--app-text-dim);
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all var(--app-transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-randomize:hover {
+            border-color: var(--app-accent);
+            color: var(--app-text);
+            background: var(--app-surface-2);
+        }
+
+        .btn-randomize svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* ═══════════════════════════════════════════
+           Toast Notification
+           ═══════════════════════════════════════════ */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--app-surface-2);
+            border: 1px solid var(--app-success);
+            color: var(--app-success);
+            padding: 12px 24px;
+            border-radius: var(--app-radius);
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* ═══════════════════════════════════════════
+           Variant Toggle Switch
+           ═══════════════════════════════════════════ */
+        .variant-toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .variant-toggle-wrapper .variant-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--app-text-dim);
+            min-width: 38px;
+            transition: color var(--app-transition);
+        }
+
+        .variant-toggle-wrapper .variant-label.active {
+            color: var(--app-accent);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: var(--app-surface-2);
+            border: 1px solid var(--app-border);
+            border-radius: 28px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: var(--app-accent);
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--app-accent-glow);
+            border-color: var(--app-accent);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(24px);
+            background: var(--app-accent);
+        }
+
+        /* ═══════════════════════════════════════════
+           Animations
+           ═══════════════════════════════════════════ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .app-header {
+            animation: fadeInUp 0.5s ease both;
+        }
+
+        .panel:first-child {
+            animation: fadeInUp 0.5s ease 0.1s both;
+        }
+
+        .panel:last-child {
+            animation: fadeInUp 0.5s ease 0.2s both;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 40px 20px;
+            width: 100%;
+            border-top: 1px solid var(--app-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer-link {
+            color: var(--app-text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all var(--app-transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-link:hover {
+            color: var(--app-accent);
+            transform: translateX(-4px);
+        }
+    </style>
 </head>
 
 <body>
-  <main>
-    <header>
-      <h1>Themes of Lore</h1>
-      <p class="intro">A collection of custom Base16 themes inspired by the elements.</p>
+    <header class="app-header">
+        <h1>Base16 Theme Creator</h1>
+        <p>Design your palette, preview live, export as YAML</p>
     </header>
 
-    <div class="grid">
-      <a href="./1million/1million-preview.html" class="theme-link one-million">
-        <span class="theme-name">1Million</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+    <main class="app-main">
+        <!-- ════════ LEFT: Controls ════════ -->
+        <div class="controls-column">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Theme Info</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="variant-toggle-wrapper">
+                        <span class="variant-label active" id="label-dark">Dark</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="theme-variant-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="variant-label" id="label-light">Light</span>
+                    </div>
+                    <div class="meta-group">
+                        <div class="meta-field">
+                            <label for="theme-name">Theme Name</label>
+                            <input type="text" id="theme-name" placeholder="My Custom Theme">
+                        </div>
+                        <div class="meta-field">
+                            <label for="theme-author">Author</label>
+                            <input type="text" id="theme-author" placeholder="Your Name">
+                        </div>
+                        <div class="meta-field">
+                            <label for="theme-system">System</label>
+                            <select id="theme-system">
+                                <option value="base16">Base16</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-      <a href="./burning-ocean/burning-ocean-preview.html" class="theme-link burning-ocean">
-        <span class="theme-name">Burning Ocean</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+            <div class="panel" style="margin-top: 16px;">
+                <div class="panel-header">
+                    <h2>Palette</h2>
+                    <button class="btn-randomize" id="btn-randomize" title="Generate random palette">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+                        Randomize
+                    </button>
+                </div>
+                <div class="panel-body">
+                    <div class="color-grid" id="color-grid">
+                        <!-- JS-generated -->
+                    </div>
+                </div>
+                <div class="download-bar">
+                    <button class="btn-download" id="btn-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download Theme
+                    </button>
+                </div>
+            </div>
+        </div>
 
-      <a href="./cream-soda/cream-soda-preview.html" class="theme-link cream-soda">
-        <span class="theme-name">Cream Soda</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+        <!-- ════════ RIGHT: Preview ════════ -->
+        <div class="preview-column">
+            <div class="panel preview-container" id="preview-panel">
+                <div class="panel-header">
+                    <h2>Live Preview</h2>
+                </div>
+                <div class="preview-body">
+                    <div class="window">
+                        <div class="titlebar">
+                            <div class="mac-btn close"></div>
+                            <div class="mac-btn min"></div>
+                            <div class="mac-btn max"></div>
+                        </div>
+                        <pre><code><span class="comment"># Base16 Theme Preview — Syntax Showcase</span>
+<span class="keyword">import</span> re
+<span class="keyword">from</span> typing <span class="keyword">import</span> List
 
-      <a href="./deep-sea-synthwave/deep-sea-synthwave-preview.html" class="theme-link deep-sea-synthwave">
-        <span class="theme-name">Deep Sea Synthwave</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+<span class="keyword">class</span> <span class="class">ThemeEngine</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, intensity: <span class="class">int</span> = <span class="number">100</span>):
+        self.<span class="property">intensity</span> = intensity
+        self.<span class="property">is_active</span> = <span class="number">True</span>
+        self.<span class="property">element</span> = <span class="string">"Custom Theme"</span>
 
-      <a href="./enchanted-midnight/enchanted-midnight-preview.html" class="theme-link enchanted-midnight">
-        <span class="theme-name">Enchanted Midnight</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+    <span class="keyword">def</span> <span class="function">apply_palette</span>(self, layer: <span class="class">str</span>) -> <span class="class">bool</span>:
+        <span class="comment"># Apply the chosen color scheme</span>
+        <span class="keyword">if</span> <span class="keyword">not</span> self.<span class="property">is_active</span>:
+            <span class="keyword">return</span> <span class="number">False</span>
 
-      <a href="./frostbite-punch/frostbite-punch-preview.html" class="theme-link frostbite-punch">
-        <span class="theme-name">Frostbite Punch</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+        regex_pattern = <span class="regex">r"^palette_\d+$"</span>
+        <span class="keyword">if</span> re.<span class="function">match</span>(regex_pattern, layer):
+            <span class="class">print</span>(<span class="string">f"Applying layer: </span>{layer}<span class="string"> at intensity </span>{self.<span class="property">intensity</span>}<span class="string">"</span>)
+            <span class="keyword">return</span> <span class="number">True</span>
 
-      <a href="./funky-pigeon/funky-pigeon-preview.html" class="theme-link funky-pigeon">
-        <span class="theme-name">Funky Pigeon</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+        <span class="keyword">return</span> <span class="number">False</span>
 
-      <a href="./girl-candy/girl-candy-preview.html" class="theme-link girl-candy">
-        <span class="theme-name">Girl Candy</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+    <span class="keyword">def</span> <span class="function">legacy_method</span>(self):
+        <span class="deprecated">return "This is Base0F"</span></code></pre>
+                    </div>
 
-      <a href="./green-tea-cheesecake/green-tea-cheesecake-preview.html" class="theme-link green-tea">
-        <span class="theme-name">Green Tea & Cheesecake</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+                    <div class="swatch-row" id="swatch-row">
+                        <!-- JS-generated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-      <a href="./maladaptive-tangerine/maladaptive-tangerine-preview.html" class="theme-link tangerine">
-        <span class="theme-name">Maladaptive Tangerine</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+    <footer>
+        <a href="themes/index.html" class="footer-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Examples
+        </a>
+    </footer>
 
-      <a href="./natures-power/natures-power-preview.html" class="theme-link nature">
-        <span class="theme-name">Nature's Power</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+    <div class="toast" id="toast">✓ Theme downloaded successfully!</div>
 
-      <a href="./rusty-trombone/rusty-trombone-preview.html" class="theme-link rusty-trombone">
-        <span class="theme-name">Rusty Trombone</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+    <script>
+        /* ═══════════════════════════════════════════
+           Constants & Configuration
+           ═══════════════════════════════════════════ */
+        const BASE_KEYS = [
+            'base00', 'base01', 'base02', 'base03',
+            'base04', 'base05', 'base06', 'base07',
+            'base08', 'base09', 'base0A', 'base0B',
+            'base0C', 'base0D', 'base0E', 'base0F'
+        ];
 
-      <a href="./summer-fun/summer-fun-preview.html" class="theme-link summer-fun">
-        <span class="theme-name">Summer Fun</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+        const BASE_ROLES = {
+            base00: 'Background',
+            base01: 'Lighter BG',
+            base02: 'Selection',
+            base03: 'Comments',
+            base04: 'Dark FG',
+            base05: 'Default FG',
+            base06: 'Light FG',
+            base07: 'Lightest FG',
+            base08: 'Variables',
+            base09: 'Numbers',
+            base0A: 'Classes',
+            base0B: 'Strings',
+            base0C: 'Regex',
+            base0D: 'Functions',
+            base0E: 'Keywords',
+            base0F: 'Deprecated'
+        };
 
-      <a href="./tango/tango-preview.html" class="theme-link tango">
-        <span class="theme-name">Tango</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+        const DEFAULT_DARK = {
+            base00: '#181818', base01: '#282828', base02: '#383838', base03: '#585858',
+            base04: '#b8b8b8', base05: '#d8d8d8', base06: '#e8e8e8', base07: '#f8f8f8',
+            base08: '#ab4642', base09: '#dc9656', base0A: '#f7ca88', base0B: '#a1b56c',
+            base0C: '#86c1b9', base0D: '#7cafc2', base0E: '#ba8baf', base0F: '#a16946'
+        };
 
-      <a href="./taste-of-italy/taste-of-italy-preview.html" class="theme-link italy">
-        <span class="theme-name">Taste of Italy</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+        /* ═══════════════════════════════════════════
+           State
+           ═══════════════════════════════════════════ */
+        const palette = { ...DEFAULT_DARK };
+        let currentVariant = 'dark';
 
-      <a href="./tropical-sorbet/tropical-sorbet-preview.html" class="theme-link tropical-sorbet">
-        <span class="theme-name">Tropical Sorbet</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
+        /* ═══════════════════════════════════════════
+           DOM Refs
+           ═══════════════════════════════════════════ */
+        const colorGrid = document.getElementById('color-grid');
+        const swatchRow = document.getElementById('swatch-row');
+        const previewPanel = document.getElementById('preview-panel');
+        const btnDownload = document.getElementById('btn-download');
+        const btnRandomize = document.getElementById('btn-randomize');
+        const toast = document.getElementById('toast');
+        const variantToggle = document.getElementById('theme-variant-toggle');
+        const labelDark = document.getElementById('label-dark');
+        const labelLight = document.getElementById('label-light');
 
-      <a href="./twilight-harvest/twilight-harvest-preview.html" class="theme-link harvest">
-        <span class="theme-name">Twilight Harvest</span>
-        <span class="theme-meta">base16 / dark & light</span>
-      </a>
-    </div>
-  </main>
+        /* ═══════════════════════════════════════════
+           Build Color Grid
+           ═══════════════════════════════════════════ */
+        function buildColorGrid() {
+            colorGrid.innerHTML = '';
+            swatchRow.innerHTML = '';
+
+            BASE_KEYS.forEach(key => {
+                // Color cell
+                const cell = document.createElement('div');
+                cell.className = 'color-cell';
+
+                const label = document.createElement('span');
+                label.className = 'color-label';
+                label.textContent = key;
+
+                const role = document.createElement('span');
+                role.className = 'color-role';
+                role.textContent = BASE_ROLES[key];
+
+                const input = document.createElement('input');
+                input.type = 'color';
+                input.id = `picker-${key}`;
+                input.value = palette[key];
+
+                const hex = document.createElement('span');
+                hex.className = 'hex-display';
+                hex.id = `hex-${key}`;
+                hex.textContent = palette[key].toUpperCase();
+
+                input.addEventListener('input', (e) => {
+                    palette[key] = e.target.value;
+                    hex.textContent = e.target.value.toUpperCase();
+                    updatePreview();
+                });
+
+                cell.appendChild(label);
+                cell.appendChild(input);
+                cell.appendChild(hex);
+                cell.appendChild(role);
+                colorGrid.appendChild(cell);
+
+                // Swatch chip
+                const chip = document.createElement('div');
+                chip.className = 'swatch-chip';
+                chip.id = `swatch-${key}`;
+                chip.dataset.label = key;
+                chip.style.backgroundColor = palette[key];
+                swatchRow.appendChild(chip);
+            });
+        }
+
+        /* ═══════════════════════════════════════════
+           Update Preview
+           ═══════════════════════════════════════════ */
+        function updatePreview() {
+            const root = previewPanel.style;
+            BASE_KEYS.forEach(key => {
+                root.setProperty(`--${key}`, palette[key]);
+                const swatch = document.getElementById(`swatch-${key}`);
+                if (swatch) swatch.style.backgroundColor = palette[key];
+            });
+        }
+
+        /* ═══════════════════════════════════════════
+           Slugify (per tinted-theming spec)
+           ═══════════════════════════════════════════ */
+        function slugify(str) {
+            return str
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '');
+        }
+
+        /* ═══════════════════════════════════════════
+           Export YAML
+           ═══════════════════════════════════════════ */
+        function exportYAML() {
+            const name = document.getElementById('theme-name').value.trim();
+            const author = document.getElementById('theme-author').value.trim();
+            const variant = currentVariant;
+            const system = document.getElementById('theme-system').value;
+
+            const schemeName = name || 'Custom Base16';
+            const slug = slugify(schemeName);
+            const filename = slug ? `${slug}.yaml` : 'custom-base16.yaml';
+
+            let yaml = '';
+            yaml += `system: "${system}"\n`;
+            yaml += `name: "${schemeName}"\n`;
+            yaml += `slug: "${slug}"\n`;
+            if (author) yaml += `author: "${author}"\n`;
+            yaml += `variant: "${variant}"\n`;
+            yaml += `palette:\n`;
+
+            BASE_KEYS.forEach(key => {
+                const hexVal = palette[key].replace('#', '').toLowerCase();
+                yaml += `  ${key}: "${hexVal}"\n`;
+            });
+
+            const blob = new Blob([yaml], { type: 'text/yaml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Success feedback
+            btnDownload.classList.add('downloaded');
+            btnDownload.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Downloaded!
+            `;
+            showToast();
+
+            setTimeout(() => {
+                btnDownload.classList.remove('downloaded');
+                btnDownload.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Theme
+                `;
+            }, 2000);
+        }
+
+        /* ═══════════════════════════════════════════
+           Toast
+           ═══════════════════════════════════════════ */
+        function showToast() {
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 2500);
+        }
+
+        /* ═══════════════════════════════════════════
+           Randomize — Harmonious palette generation
+           ═══════════════════════════════════════════ */
+        function hslToHex(h, s, l) {
+            s /= 100;
+            l /= 100;
+            const a = s * Math.min(l, 1 - l);
+            const f = n => {
+                const k = (n + h / 30) % 12;
+                const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+                return Math.round(255 * color).toString(16).padStart(2, '0');
+            };
+            return `#${f(0)}${f(8)}${f(4)}`;
+        }
+
+        function randomize() {
+            const hue = Math.random() * 360;
+            const isLight = currentVariant === 'light';
+
+            // Grays for base00-base07
+            // Dark: base00 = darkest → base07 = lightest
+            // Light: base00 = lightest → base07 = darkest
+            for (let i = 0; i <= 7; i++) {
+                const lightness = isLight
+                    ? 96 - (i * 12)
+                    : 8 + (i * 12);
+                const saturation = 4 + Math.random() * 8;
+                palette[BASE_KEYS[i]] = hslToHex(hue, saturation, lightness);
+            }
+
+            // Accent colors for base08-base0F
+            const accentHues = [];
+            for (let i = 0; i < 8; i++) {
+                accentHues.push((hue + 45 * i + (Math.random() * 20 - 10)) % 360);
+            }
+
+            for (let i = 0; i < 8; i++) {
+                const sat = 50 + Math.random() * 30;
+                const light = isLight
+                    ? 35 + Math.random() * 20
+                    : 55 + Math.random() * 20;
+                palette[BASE_KEYS[i + 8]] = hslToHex(accentHues[i], sat, light);
+            }
+
+            syncPickersFromPalette();
+            updatePreview();
+        }
+
+        /* ═══════════════════════════════════════════
+           Variant Toggle Logic
+           ═══════════════════════════════════════════ */
+        function invertGrayRamp() {
+            // Swap base00↔base07, base01↔base06, base02↔base05, base03↔base04
+            for (let i = 0; i < 4; i++) {
+                const keyA = BASE_KEYS[i];
+                const keyB = BASE_KEYS[7 - i];
+                const tmp = palette[keyA];
+                palette[keyA] = palette[keyB];
+                palette[keyB] = tmp;
+            }
+        }
+
+        function setVariant(variant) {
+            if (variant === currentVariant) return;
+            currentVariant = variant;
+
+            // Invert base00-base07 ramp
+            invertGrayRamp();
+
+            // Update app chrome
+            if (variant === 'light') {
+                document.body.classList.add('app-light');
+            } else {
+                document.body.classList.remove('app-light');
+            }
+
+            // Update toggle labels
+            labelDark.classList.toggle('active', variant === 'dark');
+            labelLight.classList.toggle('active', variant === 'light');
+
+            // Sync pickers and preview
+            syncPickersFromPalette();
+            updatePreview();
+        }
+
+        function syncPickersFromPalette() {
+            BASE_KEYS.forEach(key => {
+                const picker = document.getElementById(`picker-${key}`);
+                const hex = document.getElementById(`hex-${key}`);
+                if (picker) picker.value = palette[key];
+                if (hex) hex.textContent = palette[key].toUpperCase();
+            });
+        }
+
+        /* ═══════════════════════════════════════════
+           Init
+           ═══════════════════════════════════════════ */
+        buildColorGrid();
+        updatePreview();
+
+        btnDownload.addEventListener('click', exportYAML);
+        btnRandomize.addEventListener('click', randomize);
+        variantToggle.addEventListener('change', (e) => {
+            setVariant(e.target.checked ? 'light' : 'dark');
+        });
+    </script>
 </body>
 
 </html>
