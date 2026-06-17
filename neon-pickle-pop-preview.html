@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base16 Theme Preview: Neon Pickle Pop</title>
+    <style>
+        :root {
+            --dark-base00: #111207; --dark-base01: #1D1F0B; --dark-base02: #303312; --dark-base03: #74783A;
+            --dark-base04: #AEB45B; --dark-base05: #F4F7B6; --dark-base06: #FFFCD1; --dark-base07: #FFFEEB;
+            --dark-base08: #FF4FA0; --dark-base09: #FF8A24; --dark-base0A: #FFF23D; --dark-base0B: #7DFF3D;
+            --dark-base0C: #25F5E7; --dark-base0D: #35BFFF; --dark-base0E: #FF4FA0; --dark-base0F: #7DFF3D;
+
+            --light-base00: #FFF9D8; --light-base01: #F4EDB8; --light-base02: #E6D978; --light-base03: #8D8350;
+            --light-base04: #5D5637; --light-base05: #242415; --light-base06: #18180E; --light-base07: #0B0C05;
+            --light-base08: #FF2B8A; --light-base09: #FF7A1A; --light-base0A: #F6E500; --light-base0B: #52D927;
+            --light-base0C: #00CFC8; --light-base0D: #00A7FF; --light-base0E: #FF2B8A; --light-base0F: #52D927;
+
+            --base00: var(--dark-base00); --base01: var(--dark-base01); --base02: var(--dark-base02); --base03: var(--dark-base03);
+            --base04: var(--dark-base04); --base05: var(--dark-base05); --base06: var(--dark-base06); --base07: var(--dark-base07);
+            --base08: var(--dark-base08); --base09: var(--dark-base09); --base0A: var(--dark-base0A); --base0B: var(--dark-base0B);
+            --base0C: var(--dark-base0C); --base0D: var(--dark-base0D); --base0E: var(--dark-base0E); --base0F: var(--dark-base0F);
+        }
+        * { box-sizing: border-box; }
+        body { min-height: 100vh; margin: 0; padding: 48px 20px; background: var(--base00); color: var(--base05); font-family: "Fira Code", "Cascadia Code", Consolas, monospace; }
+        main { width: min(920px, 100%); margin: 0 auto; }
+        h1 { margin: 0 0 18px; color: var(--base0D); font-weight: 400; text-align: center; }
+        .controls { display: flex; justify-content: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        button { min-width: 118px; padding: 10px 16px; border: 1px solid var(--base02); border-radius: 6px; background: var(--base01); color: var(--base05); font: inherit; cursor: pointer; }
+        button:hover { background: var(--base02); color: var(--base07); }
+        .swatches { display: grid; grid-template-columns: repeat(8, minmax(72px, 1fr)); gap: 10px; margin-bottom: 24px; }
+        .swatch { min-height: 72px; border: 1px solid var(--base02); border-radius: 8px; padding: 9px; color: var(--base00); display: flex; align-items: end; justify-content: space-between; gap: 6px; font-size: 12px; }
+        .window { overflow: hidden; border: 1px solid var(--base02); border-radius: 12px; background: var(--base00); box-shadow: 0 22px 55px rgba(0, 0, 0, .34); }
+        .titlebar { display: flex; gap: 8px; padding: 12px 18px; background: var(--base01); border-bottom: 1px solid var(--base02); }
+        .dot { width: 13px; height: 13px; border-radius: 50%; } .close { background: var(--base08); } .min { background: var(--base0A); } .max { background: var(--base0B); }
+        pre { margin: 0; padding: 24px; overflow-x: auto; font-size: 15px; line-height: 1.65; }
+        .keyword { color: var(--base0E); font-weight: 700; } .function { color: var(--base0D); } .string { color: var(--base0B); }
+        .number { color: var(--base09); } .comment { color: var(--base03); font-style: italic; } .class { color: var(--base0A); }
+        .property, .variable { color: var(--base08); } .regex { color: var(--base0C); } .operator { color: var(--base05); }
+        .deprecated { color: var(--base0F); text-decoration: line-through; }
+        @media (max-width: 720px) { .swatches { grid-template-columns: repeat(4, minmax(64px, 1fr)); } pre { font-size: 13px; } }
+    </style>
+</head>
+<body class="theme-dark">
+    <main>
+        <h1 id="theme-title">Neon Pickle Pop Dark</h1>
+        <div class="controls">
+            <button onclick="setTheme('dark')">Dark Theme</button>
+            <button onclick="setTheme('light')">Light Theme</button>
+        </div>
+        <div class="swatches" id="swatches"></div>
+        <div class="window">
+            <div class="titlebar"><div class="dot close"></div><div class="dot min"></div><div class="dot max"></div></div>
+            <pre><code><span class="comment"># Neon Pickle Pop - bright, funky, slightly unhinged</span>
+<span class="keyword">const</span> playlist <span class="operator">=</span> {
+  <span class="property">flavour</span>: <span class="string">"electric pickle"</span>,
+  <span class="property">bpm</span>: <span class="number">148</span>,
+  <span class="property">glow</span>: <span class="regex">/^neon-(lime|pink)$/</span>,
+  <span class="function">drop</span>() {
+    <span class="keyword">return</span> <span class="string">`pop ${this.flavour} at ${this.bpm} bpm`</span>;
+  },
+  <span class="deprecated">skip</span>: <span class="number">false</span>
+};</code></pre>
+        </div>
+    </main>
+    <script>
+        const names = ["00","01","02","03","04","05","06","07","08","09","0A","0B","0C","0D","0E","0F"];
+        function setTheme(theme) {
+            const root = document.documentElement;
+            document.body.className = `theme-${theme}`;
+            document.getElementById("theme-title").innerText = theme === "light" ? "Neon Pickle Pop Light" : "Neon Pickle Pop Dark";
+            names.forEach(name => root.style.setProperty(`--base${name}`, `var(--${theme}-base${name})`));
+            renderSwatches();
+        }
+        function renderSwatches() {
+            document.getElementById("swatches").innerHTML = names.map(name => {
+                const value = getComputedStyle(document.documentElement).getPropertyValue(`--base${name}`).trim();
+                return `<div class="swatch" style="background:${value}"><strong>base${name}</strong><span>${value.toUpperCase()}</span></div>`;
+            }).join("");
+        }
+        renderSwatches();
+    </script>
+</body>
+</html>

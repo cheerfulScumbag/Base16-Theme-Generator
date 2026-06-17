@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base16 Theme Preview: Gruvforge</title>
+    <style>
+        :root {
+            --dark-base00: #171512; --dark-base01: #24211C; --dark-base02: #353026; --dark-base03: #6F6658;
+            --dark-base04: #A89C89; --dark-base05: #D8CFBC; --dark-base06: #E8DECA; --dark-base07: #F8F0DD;
+            --dark-base08: #D65D4B; --dark-base09: #E08A3E; --dark-base0A: #D7A84A; --dark-base0B: #9BAF55;
+            --dark-base0C: #66B2A2; --dark-base0D: #72A7B8; --dark-base0E: #B8836C; --dark-base0F: #B8784A;
+
+            --light-base00: #F4F0E6; --light-base01: #E5DED1; --light-base02: #CFC5B4; --light-base03: #948A7A;
+            --light-base04: #686056; --light-base05: #3D3832; --light-base06: #292622; --light-base07: #191715;
+            --light-base08: #A94938; --light-base09: #C87137; --light-base0A: #B68934; --light-base0B: #6F8F42;
+            --light-base0C: #4C8D82; --light-base0D: #4F7F91; --light-base0E: #8F6551; --light-base0F: #8A5A3B;
+
+            --base00: var(--dark-base00); --base01: var(--dark-base01); --base02: var(--dark-base02); --base03: var(--dark-base03);
+            --base04: var(--dark-base04); --base05: var(--dark-base05); --base06: var(--dark-base06); --base07: var(--dark-base07);
+            --base08: var(--dark-base08); --base09: var(--dark-base09); --base0A: var(--dark-base0A); --base0B: var(--dark-base0B);
+            --base0C: var(--dark-base0C); --base0D: var(--dark-base0D); --base0E: var(--dark-base0E); --base0F: var(--dark-base0F);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 48px 20px;
+            background: var(--base00);
+            color: var(--base05);
+            font-family: "Fira Code", "Cascadia Code", Consolas, monospace;
+            transition: background-color .25s ease, color .25s ease;
+        }
+        main { width: min(920px, 100%); margin: 0 auto; }
+        h1 { margin: 0 0 18px; color: var(--base0D); font-weight: 400; text-align: center; }
+        .controls { display: flex; justify-content: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        button {
+            min-width: 118px;
+            padding: 10px 16px;
+            border: 1px solid var(--base02);
+            border-radius: 6px;
+            background: var(--base01);
+            color: var(--base05);
+            font: inherit;
+            cursor: pointer;
+        }
+        button:hover { background: var(--base02); color: var(--base07); }
+        .swatches {
+            display: grid;
+            grid-template-columns: repeat(8, minmax(72px, 1fr));
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .swatch {
+            min-height: 72px;
+            border: 1px solid var(--base02);
+            border-radius: 8px;
+            padding: 9px;
+            color: var(--base00);
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 6px;
+            font-size: 12px;
+        }
+        .window {
+            overflow: hidden;
+            border: 1px solid var(--base02);
+            border-radius: 12px;
+            background: var(--base00);
+            box-shadow: 0 22px 55px rgba(0, 0, 0, .34);
+        }
+        .titlebar { display: flex; gap: 8px; padding: 12px 18px; background: var(--base01); border-bottom: 1px solid var(--base02); }
+        .dot { width: 13px; height: 13px; border-radius: 50%; }
+        .close { background: var(--base08); } .min { background: var(--base0A); } .max { background: var(--base0B); }
+        pre { margin: 0; padding: 24px; overflow-x: auto; font-size: 15px; line-height: 1.65; }
+        .keyword { color: var(--base0E); font-weight: 700; } .function { color: var(--base0D); }
+        .string { color: var(--base0B); } .number { color: var(--base09); }
+        .comment { color: var(--base03); font-style: italic; } .class { color: var(--base0A); }
+        .property, .variable { color: var(--base08); } .regex { color: var(--base0C); }
+        .operator { color: var(--base05); } .deprecated { color: var(--base0F); text-decoration: line-through; }
+        @media (max-width: 720px) { .swatches { grid-template-columns: repeat(4, minmax(64px, 1fr)); } pre { font-size: 13px; } }
+    </style>
+</head>
+<body class="theme-dark">
+    <main>
+        <h1 id="theme-title">Gruvforge Dark</h1>
+        <div class="controls">
+            <button onclick="setTheme('dark')">Dark Theme</button>
+            <button onclick="setTheme('light')">Light Theme</button>
+        </div>
+        <div class="swatches" id="swatches"></div>
+        <div class="window">
+            <div class="titlebar"><div class="dot close"></div><div class="dot min"></div><div class="dot max"></div></div>
+            <pre><code><span class="comment"># Gruvforge - modern industrial gruv</span>
+<span class="keyword">class</span> <span class="class">Foundry</span>:
+    <span class="keyword">def</span> <span class="function">temper</span>(self, alloy: <span class="class">str</span>, heat: <span class="class">int</span> = <span class="number">850</span>):
+        self.<span class="property">alloy</span> = alloy
+        self.<span class="property">heat</span> = heat
+        signal = <span class="regex">r"forge_[a-z]+_\d+"</span>
+        <span class="keyword">if</span> heat <span class="operator">&gt;</span> <span class="number">700</span>:
+            <span class="class">print</span>(<span class="string">f"tempered </span>{alloy}<span class="string"> at </span>{heat}<span class="string">C"</span>)
+            <span class="keyword">return</span> signal
+        <span class="deprecated">return "cold metal"</span></code></pre>
+        </div>
+    </main>
+    <script>
+        const names = ["00","01","02","03","04","05","06","07","08","09","0A","0B","0C","0D","0E","0F"];
+        function setTheme(theme) {
+            const root = document.documentElement;
+            document.body.className = `theme-${theme}`;
+            document.getElementById("theme-title").innerText = theme === "light" ? "Gruvforge Light" : "Gruvforge Dark";
+            names.forEach(name => root.style.setProperty(`--base${name}`, `var(--${theme}-base${name})`));
+            renderSwatches();
+        }
+        function renderSwatches() {
+            document.getElementById("swatches").innerHTML = names.map(name => {
+                const value = getComputedStyle(document.documentElement).getPropertyValue(`--base${name}`).trim();
+                return `<div class="swatch" style="background:${value}"><strong>base${name}</strong><span>${value.toUpperCase()}</span></div>`;
+            }).join("");
+        }
+        renderSwatches();
+    </script>
+</body>
+</html>

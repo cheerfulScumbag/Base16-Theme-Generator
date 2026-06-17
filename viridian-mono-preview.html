@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base16 Theme Preview: Viridian Mono</title>
+    <style>
+        :root {
+            --base00: #03120A; --base01: #071F12; --base02: #0D351F; --base03: #175C36;
+            --base04: #238B52; --base05: #4EDB86; --base06: #83EEB0; --base07: #D8FFE8;
+            --base08: #2FA866; --base09: #3ABB74; --base0A: #4EDB86; --base0B: #64E99B;
+            --base0C: #78F1AA; --base0D: #92F7BD; --base0E: #B5FBD3; --base0F: #D8FFE8;
+        }
+        * { box-sizing: border-box; }
+        body { min-height: 100vh; margin: 0; padding: 48px 20px; background: var(--base00); color: var(--base05); font-family: "Fira Code", "Cascadia Code", Consolas, monospace; }
+        main { width: min(920px, 100%); margin: 0 auto; }
+        h1 { margin: 0 0 24px; color: var(--base0E); font-weight: 400; text-align: center; }
+        .swatches { display: grid; grid-template-columns: repeat(8, minmax(72px, 1fr)); gap: 10px; margin-bottom: 24px; }
+        .swatch { min-height: 72px; border: 1px solid var(--base02); border-radius: 8px; padding: 9px; color: var(--base00); display: flex; align-items: end; justify-content: space-between; gap: 6px; font-size: 12px; }
+        .window { overflow: hidden; border: 1px solid var(--base02); border-radius: 12px; background: var(--base00); box-shadow: 0 24px 60px rgba(0, 0, 0, .38), 0 0 34px rgba(120, 241, 170, .08); }
+        .titlebar { display: flex; gap: 8px; padding: 12px 18px; background: var(--base01); border-bottom: 1px solid var(--base02); }
+        .dot { width: 13px; height: 13px; border-radius: 50%; } .close { background: var(--base08); } .min { background: var(--base0A); } .max { background: var(--base0B); }
+        pre { margin: 0; padding: 24px; overflow-x: auto; font-size: 15px; line-height: 1.65; }
+        .keyword { color: var(--base0E); font-weight: 700; } .function { color: var(--base0D); } .string { color: var(--base0B); }
+        .number { color: var(--base09); } .comment { color: var(--base03); font-style: italic; } .class { color: var(--base0A); }
+        .property, .variable { color: var(--base08); } .regex { color: var(--base0C); } .operator { color: var(--base05); } .deprecated { color: var(--base0F); text-decoration: line-through; }
+        @media (max-width: 720px) { body { padding: 30px 14px; } .swatches { grid-template-columns: repeat(4, minmax(64px, 1fr)); } pre { font-size: 13px; } }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Viridian Mono</h1>
+        <div class="swatches" id="swatches"></div>
+        <div class="window">
+            <div class="titlebar"><div class="dot close"></div><div class="dot min"></div><div class="dot max"></div></div>
+            <pre><code><span class="comment"># Viridian Mono - one green current</span>
+<span class="keyword">const</span> grove <span class="operator">=</span> {
+  <span class="property">state</span>: <span class="string">"alive"</span>,
+  <span class="property">growth</span>: <span class="number">128</span>,
+  <span class="property">pattern</span>: <span class="regex">/^green_[a-z]+$/</span>,
+  <span class="function">pulse</span>() { <span class="keyword">return</span> this.<span class="property">state</span>; }
+};</code></pre>
+        </div>
+    </main>
+    <script>
+        const names = ["00","01","02","03","04","05","06","07","08","09","0A","0B","0C","0D","0E","0F"];
+        document.getElementById("swatches").innerHTML = names.map(name => {
+            const value = getComputedStyle(document.documentElement).getPropertyValue(`--base${name}`).trim();
+            return `<div class="swatch" style="background:${value}"><strong>base${name}</strong><span>${value.toUpperCase()}</span></div>`;
+        }).join("");
+    </script>
+</body>
+</html>

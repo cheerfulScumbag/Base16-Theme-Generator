@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base16 Theme Preview: Retro Stripe Drive</title>
+    <style>
+        :root {
+            --base00: #F1E4C7; --base01: #E6D4AA; --base02: #D4BD88; --base03: #A98255;
+            --base04: #7B552E; --base05: #3F2714; --base06: #2A190C; --base07: #160D06;
+            --base08: #D52429; --base09: #F1602C; --base0A: #EC8922; --base0B: #915018;
+            --base0C: #A86422; --base0D: #6C3F18; --base0E: #B83724; --base0F: #6C3F18;
+        }
+        * { box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 48px 20px;
+            background:
+                linear-gradient(118deg, transparent 0 18%, var(--base0F) 18% 22%, transparent 22% 24%, var(--base0B) 24% 29%, transparent 29% 31%, var(--base08) 31% 36%, transparent 36% 38%, var(--base09) 38% 43%, transparent 43% 45%, var(--base0A) 45% 50%, transparent 50%),
+                var(--base00);
+            color: var(--base05);
+            font-family: "Fira Code", "Cascadia Code", Consolas, monospace;
+        }
+        main { width: min(920px, 100%); margin: 0 auto; }
+        h1 {
+            margin: 0 0 24px;
+            color: var(--base08);
+            font-weight: 500;
+            text-align: center;
+            text-shadow: 0 2px 0 rgba(255, 255, 255, .55);
+        }
+        .swatches {
+            display: grid;
+            grid-template-columns: repeat(8, minmax(72px, 1fr));
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .swatch {
+            min-height: 72px;
+            border: 1px solid rgba(63, 39, 20, .22);
+            border-radius: 8px;
+            padding: 9px;
+            color: var(--base00);
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 6px;
+            font-size: 12px;
+        }
+        .window {
+            overflow: hidden;
+            border: 1px solid rgba(63, 39, 20, .24);
+            border-radius: 12px;
+            background: var(--base00);
+            box-shadow: 0 24px 60px rgba(63, 39, 20, .18);
+        }
+        .titlebar {
+            display: flex;
+            gap: 8px;
+            padding: 12px 18px;
+            background: var(--base01);
+            border-bottom: 1px solid rgba(63, 39, 20, .18);
+        }
+        .dot { width: 13px; height: 13px; border-radius: 50%; }
+        .close { background: var(--base08); } .min { background: var(--base0A); } .max { background: var(--base0B); }
+        pre { margin: 0; padding: 24px; overflow-x: auto; font-size: 15px; line-height: 1.65; background: rgba(241, 228, 199, .92); }
+        .keyword { color: var(--base0E); font-weight: 700; } .function { color: var(--base0D); }
+        .string { color: var(--base0B); } .number { color: var(--base09); }
+        .comment { color: var(--base03); font-style: italic; } .class { color: var(--base0A); }
+        .property, .variable { color: var(--base08); } .regex { color: var(--base0C); }
+        .operator { color: var(--base05); } .deprecated { color: var(--base0F); text-decoration: line-through; }
+        @media (max-width: 720px) {
+            body { padding: 30px 14px; }
+            .swatches { grid-template-columns: repeat(4, minmax(64px, 1fr)); }
+            pre { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Retro Stripe Drive</h1>
+        <div class="swatches" id="swatches"></div>
+        <div class="window">
+            <div class="titlebar"><div class="dot close"></div><div class="dot min"></div><div class="dot max"></div></div>
+            <pre><code><span class="comment"># Retro Stripe Drive - worn paper, road stripes, warm motion</span>
+<span class="keyword">class</span> <span class="class">Route</span>:
+    <span class="keyword">def</span> <span class="function">curve</span>(self, lane: <span class="class">str</span>, speed: <span class="class">int</span> = <span class="number">72</span>):
+        self.<span class="property">lane</span> = lane
+        stripe = <span class="regex">r"^(red|orange|amber|brown)$"</span>
+        <span class="keyword">if</span> speed <span class="operator">&gt;</span> <span class="number">55</span>:
+            <span class="keyword">return</span> <span class="string">f"take the long curve in {lane}"</span>
+        <span class="deprecated">return "parked"</span></code></pre>
+        </div>
+    </main>
+    <script>
+        const names = ["00","01","02","03","04","05","06","07","08","09","0A","0B","0C","0D","0E","0F"];
+        document.getElementById("swatches").innerHTML = names.map(name => {
+            const value = getComputedStyle(document.documentElement).getPropertyValue(`--base${name}`).trim();
+            return `<div class="swatch" style="background:${value}"><strong>base${name}</strong><span>${value.toUpperCase()}</span></div>`;
+        }).join("");
+    </script>
+</body>
+</html>
