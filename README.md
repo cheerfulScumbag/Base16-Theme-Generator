@@ -9,13 +9,14 @@ A tool to generate custom Base16 themes. and a collection of custom Base16 theme
 
 ## How to Use
 
-Every theme lives in its own folder under `docs/themes/<theme-name>/`, which is also the GitHub Pages root:
+Every theme lives in its own folder in the repository root, which is also the GitHub Pages site:
 
-- `docs/themes/index.html` - the browsable collection (served at `/themes/index.html`)
-- `docs/themes/[theme-name]/[theme-name]-dark.yaml` (Base16 Dark Scheme)
-- `docs/themes/[theme-name]/[theme-name]-light.yaml` (Base16 Light Scheme)
-- `docs/themes/[theme-name]/[theme-name]-preview.html` (Interactive HTML visualizer)
+- `index.html` - the theme creator (served at `/`)
+- `themes/index.html` - the browsable collection (served at `/themes/index.html`)
+- `[theme-name]/[theme-name]-dark.yaml` (Base16 Dark Scheme)
+- `[theme-name]/[theme-name]-light.yaml` (Base16 Light Scheme)
+- `[theme-name]/[theme-name]-preview.html` (Interactive HTML visualizer)
 
-`docs/themes/` is the single source of truth - do not keep duplicate copies of a theme elsewhere, since the published site reads from here directly.
+GitHub Pages publishes from the repository root (`main` / `(root)`). The theme folders are the single source of truth, so do not keep duplicate copies under `docs/`.
 
 These schemes can be used with any of your favorite applications (terminals, editors, UI elements).

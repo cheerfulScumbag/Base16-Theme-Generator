@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base16 Theme Preview: Hyperfuture Neon</title>
+    <style>
+        :root {
+            /* Hyperfuture Neon Dark */
+            --dark-base00: #05020a;
+            --dark-base01: #110b1f;
+            --dark-base02: #21143a;
+            --dark-base03: #5a4a78;
+            --dark-base04: #9d8bc7;
+            --dark-base05: #e8e0ff;
+            --dark-base06: #f4efff;
+            --dark-base07: #ffffff;
+            --dark-base08: #ff1fd2;
+            --dark-base09: #ff7a00;
+            --dark-base0A: #e8ff1f;
+            --dark-base0B: #00ff66;
+            --dark-base0C: #00ffe0;
+            --dark-base0D: #00a6ff;
+            --dark-base0E: #9b5cff;
+            --dark-base0F: #ff2d55;
+
+            /* Hyperfuture Neon Light */
+            --light-base00: #ffffff;
+            --light-base01: #f4efff;
+            --light-base02: #e8e0ff;
+            --light-base03: #9d8bc7;
+            --light-base04: #5a4a78;
+            --light-base05: #21143a;
+            --light-base06: #110b1f;
+            --light-base07: #05020a;
+            --light-base08: #d700ab;
+            --light-base09: #b85800;
+            --light-base0A: #6e7b00;
+            --light-base0B: #008535;
+            --light-base0C: #008574;
+            --light-base0D: #0078b8;
+            --light-base0E: #8e48ff;
+            --light-base0F: #e5002c;
+
+            /* Current Defaults */
+            --base00: var(--dark-base00);
+            --base01: var(--dark-base01);
+            --base02: var(--dark-base02);
+            --base03: var(--dark-base03);
+            --base04: var(--dark-base04);
+            --base05: var(--dark-base05);
+            --base06: var(--dark-base06);
+            --base07: var(--dark-base07);
+            --base08: var(--dark-base08);
+            --base09: var(--dark-base09);
+            --base0A: var(--dark-base0A);
+            --base0B: var(--dark-base0B);
+            --base0C: var(--dark-base0C);
+            --base0D: var(--dark-base0D);
+            --base0E: var(--dark-base0E);
+            --base0F: var(--dark-base0F);
+        }
+
+        body {
+            background-color: var(--base00);
+            color: var(--base05);
+            font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1 {
+            color: var(--base0D);
+            margin-bottom: 10px;
+            font-weight: 300;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background-color: var(--base01);
+            color: var(--base05);
+            border: 1px solid var(--base02);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--base02);
+            color: var(--base07);
+        }
+
+        .window {
+            background-color: var(--base00);
+            border: 1px solid var(--base02);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(15, 18, 27, 0.8), 0 0 45px rgba(46, 230, 166, 0.22);
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            transition: all 0.3s ease;
+        }
+
+        body.theme-light .window {
+            box-shadow: 0 20px 50px rgba(15, 18, 27, 0.15);
+        }
+
+        .titlebar {
+            background-color: var(--base01);
+            padding: 12px 18px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--base02);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .mac-btn {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+        }
+
+        .close {
+            background-color: var(--base08);
+        }
+
+        .min {
+            background-color: var(--base0A);
+        }
+
+        .max {
+            background-color: var(--base0B);
+        }
+
+        pre {
+            padding: 25px;
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .keyword {
+            color: var(--base0E);
+            font-weight: bold;
+        }
+
+        .function {
+            color: var(--base0D);
+        }
+
+        .string {
+            color: var(--base0B);
+        }
+
+        .number {
+            color: var(--base09);
+        }
+
+        .comment {
+            color: var(--base03);
+            font-style: italic;
+        }
+
+        .class {
+            color: var(--base0A);
+        }
+
+        .operator {
+            color: var(--base05);
+        }
+
+        .variable {
+            color: var(--base08);
+        }
+
+        .regex {
+            color: var(--base0C);
+        }
+
+        .property {
+            color: var(--base08);
+        }
+
+        .deprecated {
+            color: var(--base0F);
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body class="theme-dark">
+
+    <h1 id="theme-title">Hyperfuture Neon - Dark</h1>
+    <div class="controls">
+        <button onclick="setTheme('dark')">Dark Theme</button>
+        <button onclick="setTheme('light')">Light Theme</button>
+    </div>
+
+    <div class="window">
+        <div class="titlebar">
+            <div class="mac-btn close"></div>
+            <div class="mac-btn min"></div>
+            <div class="mac-btn max"></div>
+        </div>
+        <pre><code><span class="comment"># Hyperfuture Neon - base16 preview</span>
+<span class="keyword">import</span> re
+
+<span class="keyword">class</span> <span class="class">HyperfutureNeon</span>:
+    <span class="keyword">def</span> <span class="function">render</span>(self, layer: <span class="class">str</span>) -> <span class="class">bool</span>:
+        <span class="comment"># Showcase the palette in context</span>
+        pattern = <span class="regex">r"^base16_\d+$"</span>
+        <span class="class">print</span>(<span class="string">f"Rendering: </span>{layer}<span class="string">"</span>)
+        <span class="keyword">return</span> <span class="number">True</span>
+
+    <span class="keyword">def</span> <span class="function">legacy_name</span>(self):
+        <span class="deprecated">return "This is Base0F"</span></code></pre>
+    </div>
+
+    <script>
+        function setTheme(theme) {
+            const root = document.documentElement;
+            document.body.className = `theme-${theme}`;
+
+            if (theme === 'light') {
+                document.getElementById('theme-title').innerText = "Hyperfuture Neon - Light";
+                for (let i = 0; i < 16; i++) {
+                    let hex = i.toString(16).toUpperCase();
+                    root.style.setProperty(`--base0${hex}`, `var(--light-base0${hex})`);
+                }
+            } else {
+                document.getElementById('theme-title').innerText = "Hyperfuture Neon - Dark";
+                for (let i = 0; i < 16; i++) {
+                    let hex = i.toString(16).toUpperCase();
+                    root.style.setProperty(`--base0${hex}`, `var(--dark-base0${hex})`);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
